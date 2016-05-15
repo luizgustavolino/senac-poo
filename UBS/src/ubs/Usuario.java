@@ -60,9 +60,8 @@ public class Usuario implements Interfaciavel{
         return atual;
     }
     
-    public void encerrarSessao(){
-        atual = null;
-        UBS.getInstance().salvarContexto();
+    private void encerrarSessao(){
+        atual = null;     
     }
     
     protected Usuario(String nome, String sobrenome, String senha){
@@ -77,11 +76,18 @@ public class Usuario implements Interfaciavel{
 
     @Override
     public List<String> acoesDisponiveis(String contexto) {
-        return Arrays.asList("Agendar");
+        return Arrays.asList("Agendar", "Logout");
     }
 
     @Override
     public Interfaciavel escolherAcao(String acao) {
+        
+        switch(acao){
+            case "Logout":
+                encerrarSessao();
+                return UBS.getInstance();
+        }
+        
         return this;
     }
 }

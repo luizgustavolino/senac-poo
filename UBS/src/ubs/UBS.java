@@ -6,7 +6,9 @@
 package ubs;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,26 +44,34 @@ public class UBS implements Interfaciavel {
     }
     
     private void startProgram(){
-        carregarContexto();
         ui = new InterfaceDoUsuario();
+        carregarContexto();
         ui.iniciar(this);
     }
     
     private void carregarContexto(){
-        
         // From: x-stream.github.io/tutorial.html (may, 15)
         xstream = new XStream(new StaxDriver());
-        usuarios = new ArrayList<>();
-        
+
+        try{
+            File xmlFile = new File("ubs_db.xml");
+            if(xmlFile.exists() && !xmlFile.isDirectory()) { 
+                usuarios = (List<Usuario>) xstream.fromXML(xmlFile);
+            }else{
+                usuarios = new ArrayList<>();
+            }
+        }catch(XStreamException e){
+            throw new RuntimeException("Erro ao carregar os dados da UBS!");
+        }
     }
     
     public void salvarContexto(){
         
+        // From: http://stackoverflow.com/questions/13063815/save-xml-file-with-xstream (may, 15)
         FileOutputStream fos = null;
         
         try {
             fos = new FileOutputStream("ubs_db.xml");
-            fos.write("<?xml version=\"1.0\"?>".getBytes("UTF-8"));
             String xml = xstream.toXML(getUsuarios());
             byte[] bytes = xml.getBytes("UTF-8");
             fos.write(bytes);

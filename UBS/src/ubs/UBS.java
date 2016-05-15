@@ -86,6 +86,11 @@ public class UBS implements Interfaciavel {
         }
 
     }
+    
+    public void registrarUsuario(Usuario novoUsuario){
+        usuarios.add(novoUsuario);
+        salvarContexto();
+    }
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -107,11 +112,14 @@ public class UBS implements Interfaciavel {
                     return this;
                 }
             case "Cadastro":
-                Usuario novoUsuario = Usuario.cadastrar();
-                usuarios.add(novoUsuario);
-                UBS.getInstance().salvarContexto();
-                UBS.getInstance().ui.mostraLinha("Cadastro realizado. Seu login é ");
-                return this;
+                
+                return new Cadastro();
+                
+                //Usuario novoUsuario = Usuario.cadastrar();
+                //usuarios.add(novoUsuario);
+                //UBS.getInstance().salvarContexto();
+                //UBS.getInstance().ui.mostraLinha("Cadastro realizado. Seu login é ");
+                //return this;
             case "Encerrar":
             default:
                 return null;

@@ -1,1 +1,1 @@
-<?xml version='1.0' encoding='UTF-8'?><list><ubs.Usuario><nome>Luiz</nome><sobrenome>Gustavo</sobrenome><senha>123</senha></ubs.Usuario></list>
+<?xml version='1.0' encoding='UTF-8'?><list><ubs.Usuario><email>gabriel@email.com</email><nome>gabriel</nome><sobrenome>hideki</sobrenome><senha>abc</senha></ubs.Usuario><ubs.Usuario><email>luiz@email.com</email><nome>Luiz</nome><sobrenome>Gustavo</sobrenome><senha>123</senha></ubs.Usuario></list>

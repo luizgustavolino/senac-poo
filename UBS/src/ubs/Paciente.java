@@ -14,7 +14,8 @@ public class Paciente extends Usuario{
     public String dataDeNascimento;
     private Agendamento[] agendamentos; 
 
-    public Paciente(String nome, String sobrenome, String senha) {
-        super(nome, sobrenome, senha);
+    public Paciente(String email, String nome, String sobrenome, String senha) {
+        super(email, nome, sobrenome, senha);
     }
+
 }

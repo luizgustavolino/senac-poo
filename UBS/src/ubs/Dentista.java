@@ -11,10 +11,10 @@ package ubs;
  */
 public class Dentista extends Especialista{
 
-    public Dentista(String nome, String sobrenome, String senha) {
-        super(nome, sobrenome, senha);
+    public Dentista(String email, String nome, String sobrenome, String senha) {
+        super(email, nome, sobrenome, senha);
     }
-    
+
     public String realizarProcedimentos(Paciente paciente){
         //to do
         return " ";

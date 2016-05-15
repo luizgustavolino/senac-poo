@@ -17,7 +17,9 @@ public class Especialista extends Funcionario{
         return new Especialista[0];
     }
 
-    public Especialista(String nome, String sobrenome, String senha) {
-        super(nome, sobrenome, senha);
+    public Especialista(String email, String nome, String sobrenome, String senha) {
+        super(email, nome, sobrenome, senha);
     }
+
+  
 }

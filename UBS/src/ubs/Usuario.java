@@ -18,6 +18,7 @@ import ubs.ui.Interfaciavel;
 public class Usuario implements Interfaciavel{
     
     //private int id;
+    private String email;
     private String nome;
     private String sobrenome;
     private String senha;
@@ -25,7 +26,7 @@ public class Usuario implements Interfaciavel{
     
     public static Usuario acessar() throws UsuarioIncorretoException{
         
-        UBS.getInstance().ui.mostra("Usuário: ");
+        UBS.getInstance().ui.mostra("Email: ");
         String usuario = UBS.getInstance().ui.pedeString();
         
         UBS.getInstance().ui.mostra("Senha: ");
@@ -44,7 +45,26 @@ public class Usuario implements Interfaciavel{
     
     public static Usuario cadastrar() {
         
-        UBS.getInstance().ui.mostra("Seu nome: ");
+        boolean emailDisponivel;
+        String email;
+        
+        do{
+            
+            emailDisponivel = true;
+            UBS.getInstance().ui.mostra("Seu email: ");
+            email = UBS.getInstance().ui.pedeString();
+
+            List<Usuario> todos = UBS.getInstance().getUsuarios();
+            for(Usuario usuario : todos){
+                if(usuario.getEmail().equals(email)){
+                    UBS.getInstance().ui.mostraLinha("Usuario já cadastrado!");
+                    emailDisponivel = false;
+                    break;
+                }   
+            }
+        }while(!emailDisponivel);
+        
+        UBS.getInstance().ui.mostra("Seu primeiro nome: ");
         String nome = UBS.getInstance().ui.pedeString();
         
         UBS.getInstance().ui.mostra("Seu sobrenome: ");
@@ -53,7 +73,9 @@ public class Usuario implements Interfaciavel{
         UBS.getInstance().ui.mostra("Sua senha: ");
         String senha = UBS.getInstance().ui.pedeString();
         
-        return new Usuario(nome, sobrenome, senha);
+        Usuario novo = new Usuario(email, nome, sobrenome, senha);
+        UBS.getInstance().registrarUsuario(novo);
+        return novo;
     }
     
     public static Usuario usuarioAtual(){
@@ -64,14 +86,15 @@ public class Usuario implements Interfaciavel{
         atual = null;     
     }
     
-    protected Usuario(String nome, String sobrenome, String senha){
+    protected Usuario(String email, String nome, String sobrenome, String senha){
+        this.email = email;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.senha = senha;
     }
     
     private Boolean validarLogin(String usuario, String senha){
-        return this.nome.equals(nome) && this.senha.equals(senha);
+        return this.email.equals(email) && this.senha.equals(senha);
     }
 
     @Override
@@ -89,5 +112,9 @@ public class Usuario implements Interfaciavel{
         }
         
         return this;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

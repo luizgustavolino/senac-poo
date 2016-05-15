@@ -7,11 +7,8 @@ package ubs.ui;
 
 import java.util.List;
 
-/**
- *
- * @author luizgustavolino
- */
-public interface UserInterfaceHandler {
+// Não consegui pensar num nome bom em português, desculpa Takeo!
+public interface Interfaciavel {
     public List<String> acoesDisponiveis(String contexto);
-    public UserInterfaceHandler escolherAcao(String acao);
+    public Interfaciavel escolherAcao(String acao);
 }

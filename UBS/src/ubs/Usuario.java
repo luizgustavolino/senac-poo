@@ -5,15 +5,17 @@
  */
 package ubs;
 
+import java.util.Arrays;
 import java.util.List;
 import ubs.exceptions.UsuarioIncorretoException;
+import ubs.ui.Interfaciavel;
 
 /**
  *
  * @author luizgustavolino
  */
 
-public class Usuario {
+public class Usuario implements Interfaciavel{
     
     //private int id;
     private String nome;
@@ -21,8 +23,13 @@ public class Usuario {
     private String senha;
     private static Usuario atual;
     
-    public static Usuario Acessar(String usuario, String senha)
-            throws UsuarioIncorretoException{
+    public static Usuario acessar() throws UsuarioIncorretoException{
+        
+        UBS.getInstance().ui.mostra("Usuário: ");
+        String usuario = UBS.getInstance().ui.pedeString();
+        
+        UBS.getInstance().ui.mostra("Senha: ");
+        String senha = UBS.getInstance().ui.pedeString();
         
         List<Usuario> todos = UBS.getInstance().getUsuarios();
         for (Usuario umUsuario : todos) {
@@ -35,16 +42,46 @@ public class Usuario {
         throw new UsuarioIncorretoException();
     }
     
+    public static Usuario cadastrar() {
+        
+        UBS.getInstance().ui.mostra("Seu nome: ");
+        String nome = UBS.getInstance().ui.pedeString();
+        
+        UBS.getInstance().ui.mostra("Seu sobrenome: ");
+        String sobrenome = UBS.getInstance().ui.pedeString();
+        
+        UBS.getInstance().ui.mostra("Sua senha: ");
+        String senha = UBS.getInstance().ui.pedeString();
+        
+        return new Usuario(nome, sobrenome, senha);
+    }
+    
     public static Usuario usuarioAtual(){
         return atual;
     }
     
     public void encerrarSessao(){
         atual = null;
-        UBS.getInstance().saveContext();
+        UBS.getInstance().salvarContexto();
+    }
+    
+    protected Usuario(String nome, String sobrenome, String senha){
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.senha = senha;
     }
     
     private Boolean validarLogin(String usuario, String senha){
         return this.nome.equals(nome) && this.senha.equals(senha);
+    }
+
+    @Override
+    public List<String> acoesDisponiveis(String contexto) {
+        return Arrays.asList("Agendar");
+    }
+
+    @Override
+    public Interfaciavel escolherAcao(String acao) {
+        return this;
     }
 }

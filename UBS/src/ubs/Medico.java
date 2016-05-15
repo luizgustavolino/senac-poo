@@ -10,6 +10,11 @@ package ubs;
  * @author luizgustavolino
  */
 public class Medico extends Especialista{
+
+    public Medico(String nome, String sobrenome, String senha) {
+        super(nome, sobrenome, senha);
+    }
+    
     public String realizarCheckList(Paciente paciente){
         //to do
         return " ";

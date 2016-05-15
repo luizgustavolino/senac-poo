@@ -11,6 +11,10 @@ package ubs;
  */
 public class Funcionario extends Usuario {
     private AcessoProntuario[] prontuarios;
+
+    public Funcionario(String nome, String sobrenome, String senha) {
+        super(nome, sobrenome, senha);
+    }
     
     public String descricao(){
         //to do

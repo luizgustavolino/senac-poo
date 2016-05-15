@@ -20,7 +20,7 @@ public class Agendamento {
     
     public static Agendamento agendar(){
         //to do
-        return new Agendamento(new Data(), new Paciente(), new Especialista());
+        return null;
     }
     
     public void cancelar(){

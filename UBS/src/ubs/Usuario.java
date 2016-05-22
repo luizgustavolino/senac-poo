@@ -18,11 +18,11 @@ import ubs.ui.Interfaciavel;
 public class Usuario implements Interfaciavel{
     
     //private int id;
-    private String email;
-    private String nome;
-    private String sobrenome;
-    private String senha;
-    private static Usuario atual;
+    protected String email;
+    protected String nome;
+    protected String sobrenome;
+    protected String senha;
+    protected static Usuario atual;
     
     public static Usuario acessar() throws UsuarioIncorretoException{
         
@@ -43,10 +43,9 @@ public class Usuario implements Interfaciavel{
         throw new UsuarioIncorretoException();
     }
     
-    public static Usuario cadastrar() {
+    public Usuario() {
         
         boolean emailDisponivel;
-        String email;
         
         do{
             
@@ -65,17 +64,14 @@ public class Usuario implements Interfaciavel{
         }while(!emailDisponivel);
         
         UBS.getInstance().ui.mostra("Seu primeiro nome: ");
-        String nome = UBS.getInstance().ui.pedeString();
+        nome = UBS.getInstance().ui.pedeString();
         
         UBS.getInstance().ui.mostra("Seu sobrenome: ");
-        String sobrenome = UBS.getInstance().ui.pedeString();
+        sobrenome = UBS.getInstance().ui.pedeString();
         
         UBS.getInstance().ui.mostra("Sua senha: ");
-        String senha = UBS.getInstance().ui.pedeString();
-        
-        Usuario novo = new Usuario(email, nome, sobrenome, senha);
-        UBS.getInstance().registrarUsuario(novo);
-        return novo;
+        senha = UBS.getInstance().ui.pedeString();
+     
     }
     
     public static Usuario usuarioAtual(){
@@ -86,15 +82,8 @@ public class Usuario implements Interfaciavel{
         atual = null;     
     }
     
-    protected Usuario(String email, String nome, String sobrenome, String senha){
-        this.email = email;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.senha = senha;
-    }
-    
-    private Boolean validarLogin(String usuario, String senha){
-        return this.email.equals(email) && this.senha.equals(senha);
+    private Boolean validarLogin(String emailUsuario, String senha){
+        return this.email.equals(emailUsuario) && this.senha.equals(senha);
     }
 
     @Override

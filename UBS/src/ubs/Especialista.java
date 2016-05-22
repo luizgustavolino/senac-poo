@@ -5,21 +5,37 @@
  */
 package ubs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
  * @author luizgustavolino
  */
-public class Especialista extends Funcionario{
+public abstract class Especialista extends Funcionario{
+    
     private Agendamento[] agendamentos; 
     
-    public static Especialista[] todos(){
-        return new Especialista[0];
+    public static List<Especialista> todos(){
+        return todos(Especialista.class);
     }
+    
+    protected static List<Especialista> todos(Class especialidade){
+        
+        List<Especialista> todosEspecialistas = new ArrayList<>();
+        List<Usuario> todos = UBS.getInstance().getUsuarios();
+        
+        for(Usuario usuario : todos){
+            if(usuario.getClass().equals(especialidade)){
+                todosEspecialistas.add((Especialista)usuario);
+            }
+        }
 
-    public Especialista(String email, String nome, String sobrenome, String senha) {
-        super(email, nome, sobrenome, senha);
+        return todosEspecialistas;
     }
-
-  
+    
+    public Especialista() {
+        super();
+    }
 }

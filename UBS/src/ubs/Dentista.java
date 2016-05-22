@@ -5,16 +5,22 @@
  */
 package ubs;
 
+import java.util.List;
+
 /**
  *
  * @author luizgustavolino
  */
 public class Dentista extends Especialista{
 
-    public Dentista(String email, String nome, String sobrenome, String senha) {
-        super(email, nome, sobrenome, senha);
+    public static List<Especialista> todos(){
+        return todos(Dentista.class);
     }
-
+    
+    public Dentista() {
+        super();
+    }
+    
     public String realizarProcedimentos(Paciente paciente){
         //to do
         return " ";

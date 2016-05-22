@@ -11,10 +11,10 @@ package ubs;
  */
 public class Enfermeiro extends Funcionario{
 
-    public Enfermeiro(String email, String nome, String sobrenome, String senha) {
-        super(email, nome, sobrenome, senha);
+    public Enfermeiro() {
+        super();
     }
-
+    
     public String realizarTriagem(Paciente paciente){
         //to do
         return " ";

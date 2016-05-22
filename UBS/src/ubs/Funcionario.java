@@ -9,15 +9,22 @@ package ubs;
  *
  * @author luizgustavolino
  */
-public class Funcionario extends Usuario {
+public abstract class Funcionario extends Usuario {
     private AcessoProntuario[] prontuarios;
 
-    public Funcionario(String email, String nome, String sobrenome, String senha) {
-        super(email, nome, sobrenome, senha);
+    public Funcionario() {
+        super();
     }
 
     public String descricao(){
-        //to do
-        return " ";
-    } 
+         return "(" + this.getClass().getSimpleName() + ") " + nomeCompleto();
+    }
+    
+    public String nomeCompleto(){
+        return sobrenome.toUpperCase() + ", " + nome;
+    }
+    
+    public String nomeCompletoComEmail(){
+        return nomeCompleto()+" ("+email+")";
+    }
 }

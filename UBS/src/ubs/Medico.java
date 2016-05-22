@@ -5,14 +5,21 @@
  */
 package ubs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author luizgustavolino
  */
 public class Medico extends Especialista{
 
-    public Medico(String email, String nome, String sobrenome, String senha) {
-        super(email, nome, sobrenome, senha);
+    public static List<Especialista> todos(){
+        return todos(Medico.class);
+    }
+    
+    public Medico() {
+        super();
     }
     
     public String realizarCheckList(Paciente paciente){

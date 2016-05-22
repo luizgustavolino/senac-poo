@@ -22,13 +22,21 @@ public class Cadastro implements Interfaciavel{
 
     @Override
     public Interfaciavel escolherAcao(String acao) {
+        
+        Usuario usr = null;
+        
         switch(acao){
-            case "Paciente": return Paciente.cadastrar();
-            case "Médico": return Medico.cadastrar();
-            case "Dentista": return Dentista.cadastrar();
-            case "Enfermeiro": return Enfermeiro.cadastrar();
-            case "Cancelar":
-            default: return UBS.getInstance();
+            case "Paciente": usr = new Paciente(); break;
+            case "Médico": usr = new Medico(); break;
+            case "Dentista": usr = new Dentista(); break;
+            case "Enfermeiro": usr =  new Enfermeiro(); break;
+        }
+        
+        if (usr != null) {
+            UBS.getInstance().registrarUsuario(usr);
+            return usr;
+        }else{
+            return UBS.getInstance();
         }
     }
 }

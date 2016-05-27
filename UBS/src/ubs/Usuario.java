@@ -5,6 +5,7 @@
  */
 package ubs;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import ubs.exceptions.UsuarioIncorretoException;
@@ -36,6 +37,7 @@ public class Usuario implements Interfaciavel{
         for (Usuario umUsuario : todos) {
             if(umUsuario.validarLogin(usuario, senha)){
                 atual = umUsuario;
+                UBS.getInstance().ui.mostraLinha("Bem vindo a UBS, " + atual.nome + ".");
                 return atual;
             }
         }
@@ -79,6 +81,7 @@ public class Usuario implements Interfaciavel{
     }
     
     private void encerrarSessao(){
+        UBS.getInstance().ui.mostraLinha("Acesso finalizado, " + atual.nome + ". Até logo.");
         atual = null;     
     }
     
@@ -87,8 +90,10 @@ public class Usuario implements Interfaciavel{
     }
 
     @Override
-    public List<String> acoesDisponiveis(String contexto) {
-        return Arrays.asList("Agendar", "Logout");
+    public ArrayList<String> acoesDisponiveis(String contexto) {
+        ArrayList<String> acoes = new ArrayList<>();
+        acoes.addAll(Arrays.asList("Logout"));
+        return acoes;
     }
 
     @Override

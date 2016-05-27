@@ -5,10 +5,15 @@
  */
 package ubs.ui;
 
-import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import ubs.UBS;
+import ubs.extensions.DateHelpers;
 
 /**
  *
@@ -51,7 +56,6 @@ public class InterfaceDoUsuario {
     
     public String pedeEscolhaEntreOpcoes(List<String> acoes){
         
-        Scanner entrada = new Scanner(System.in);
         String  escolhida = null;
         
         do{
@@ -59,24 +63,60 @@ public class InterfaceDoUsuario {
             System.out.println("Escolha uma opção:");
             for (int i = 0; i < acoes.size(); i++) {
                 String acao = acoes.get(i);
-                mostraLinha("    "+(i+1) + ". "+acao);
+                mostraLinha("["+(i+1) + "] "+acao);
             }
             
+            Scanner entrada = new Scanner(System.in);
+            int selecao;
             mostra("> ");
             
-            int selecao = entrada.nextInt();
-            if(selecao > 0 && selecao <= acoes.size()){
-                escolhida = acoes.get(selecao - 1);
+            if (entrada.hasNextInt()) {
+                selecao = entrada.nextInt();
+                if(selecao > 0 && selecao <= acoes.size()){
+                    escolhida = acoes.get(selecao - 1);
+                }else{
+                    mostra("Opção '" + selecao + "' inválida! ");
+                }
             }else{
-                mostra("Opção '" + selecao + "' inválida! ");
+                mostra("Opção precisa ser numérica! ");
             }
         }while(escolhida == null);
         
         return escolhida;
     }
-
-    public String pedeEscolhaEntreOpcoes(Object[] toArray) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public Date pedeUmaData(){
+        
+        Date dataEscolhida = null;
+        do{
+            String dataDigitada = UBS.getInstance().ui.pedeString();
+            DateFormat formatador = new SimpleDateFormat("d/M/yyyy");
+            
+            try {
+                dataEscolhida = formatador.parse(dataDigitada);
+            }catch(ParseException e){
+                // erro na digitação
+            }finally{
+                if(dataEscolhida == null){
+                    UBS.getInstance().ui.mostra("Desculpe, data inválida. ");
+                }
+            }
+            
+        }while(dataEscolhida == null);
+        return dataEscolhida;
     }
     
+    public Date pedeUmaDataFutura(){
+        Date dataEscolhida = null;
+        boolean dataValida = false;
+        do{
+            dataEscolhida = pedeUmaData();
+            if(DateHelpers.isFutureDay(dataEscolhida)){
+                dataValida = true;
+            }else{
+                UBS.getInstance().ui.mostraLinha("Por favor, digite uma data futura.");
+            }
+        }while(dataValida != true);
+        return dataEscolhida;
+    }
 }

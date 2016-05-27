@@ -93,8 +93,10 @@ public class UBS implements Interfaciavel {
     }
     
     @Override
-    public List<String> acoesDisponiveis(String contexto) {
-        return Arrays.asList("Login", "Cadastro", "Encerrar");
+    public ArrayList<String> acoesDisponiveis(String contexto) {
+        ArrayList<String> acoes = new ArrayList<>();
+        acoes.addAll(Arrays.asList("Login", "Cadastro", "Encerrar"));
+        return acoes;
     }
 
     @Override
@@ -107,15 +109,7 @@ public class UBS implements Interfaciavel {
                     UBS.getInstance().ui.mostraLinha("Usuário ou senha incorreto!");
                     return this;
                 }
-            case "Cadastro":
-                
-                return new Cadastro();
-                
-                //Usuario novoUsuario = Usuario.cadastrar();
-                //usuarios.add(novoUsuario);
-                //UBS.getInstance().salvarContexto();
-                //UBS.getInstance().ui.mostraLinha("Cadastro realizado. Seu login é ");
-                //return this;
+            case "Cadastro": return new Cadastro();
             case "Encerrar":
             default:
                 return null;

@@ -5,10 +5,11 @@
  */
 package ubs.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Não consegui pensar num nome bom em português, desculpa Takeo!
 public interface Interfaciavel {
-    public List<String> acoesDisponiveis(String contexto);
+    public ArrayList<String> acoesDisponiveis(String contexto);
     public Interfaciavel escolherAcao(String acao);
 }

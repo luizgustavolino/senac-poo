@@ -5,6 +5,7 @@
  */
 package ubs;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import ubs.ui.Interfaciavel;
@@ -16,8 +17,10 @@ import ubs.ui.Interfaciavel;
 public class Cadastro implements Interfaciavel{
 
     @Override
-    public List<String> acoesDisponiveis(String contexto) {
-        return Arrays.asList("Paciente", "Médico", "Dentista", "Enfermeiro", "Cancelar");
+    public ArrayList<String> acoesDisponiveis(String contexto) {
+        ArrayList<String> acoes = new ArrayList<>();
+        acoes.addAll(Arrays.asList("Paciente", "Médico", "Dentista", "Enfermeiro", "Cancelar"));
+        return acoes;
     }
 
     @Override

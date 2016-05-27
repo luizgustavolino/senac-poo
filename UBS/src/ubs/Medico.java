@@ -22,7 +22,8 @@ public class Medico extends Especialista{
     }
     
     public String realizarCheckList(Paciente paciente){
-        //to do
+        //UBS.getInstance().ui.mostraLinha("");
+        //UBS.getInstance().ui.pedeEscolhaEntreOpcoes("")
         return " ";
     }
     
@@ -30,4 +31,11 @@ public class Medico extends Especialista{
         //to do
         return " ";
     }
+    
+    
 }
+
+//From :
+//http://www.tuasaude.com/sintomas-causados-pelo-zika-virus/
+//http://www.cdc.gov/chikungunya/symptoms/index.html
+//http://www.dengue.pr.gov.br/modules/conteudo/conteudo.php?conteudo=5

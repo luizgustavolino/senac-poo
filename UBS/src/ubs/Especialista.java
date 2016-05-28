@@ -5,12 +5,15 @@
  */
 package ubs;
 
+import java.io.Console;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javafx.scene.input.DataFormat;
 import ubs.extensions.DateHelpers;
 import ubs.exceptions.NenhumPacienteEscolhidoException;
 import ubs.ui.Interfaciavel;
@@ -93,7 +96,7 @@ public abstract class Especialista extends Funcionario{
         Paciente pacienteEscolhido = null;
         do{
             
-            UBS.getInstance().ui.mostraLinha("Como gostaria de escolher o próximo paciente?");
+            UBS.getInstance().ui.mostraLinha("Como gostaria de escolher o paciente?");
             String opt = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(new String[]{"Buscando nos meus agendamentos", "Consultando por nome e data de nascimento", "Cancelar"});
 
             switch (opt) {
@@ -127,26 +130,34 @@ public abstract class Especialista extends Funcionario{
                         }
                     }   break;
                 case "Consultando por nome e data de nascimento":
+                    
                     UBS.getInstance().ui.mostra("Digite o sobrenome do paciente: ");
                     String nomeDigitado = UBS.getInstance().ui.pedeString();
                     List<Usuario> todos = UBS.getInstance().getUsuarios();
                     ArrayList<Paciente> provaveis = new ArrayList<>();
+                    
                     for (Usuario usuario : todos) {
                         if(usuario.getClass().equals(Paciente.class) && usuario.getSobrenome().toLowerCase().equals(nomeDigitado.toLowerCase())){
                             provaveis.add((Paciente) usuario);
                         }
-                    }   if(provaveis.isEmpty()){
+                    }
+                    
+                    if(provaveis.isEmpty()){
                         UBS.getInstance().ui.mostraLinha("(!) Nenhum paciente foi encontrado para este sobrenome.");
                     }else{
+                        
                         ArrayList<String> nomes = new ArrayList<>();
                         for (Paciente pacienteProvavel : provaveis) nomes.add(pacienteProvavel.descricao());
                         nomes.add("Continuar procurando");
                         String nomePacienteEscolhido = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(nomes);
+                        
                         if(!nomePacienteEscolhido.equals("Continuar procurando")){
                             int index = nomes.indexOf(nomePacienteEscolhido);
                             pacienteEscolhido = provaveis.get(index);
                         }
-                    }   break;
+                    }
+                    
+                    break;
                 default:
                     throw new NenhumPacienteEscolhidoException();
             }
@@ -159,7 +170,7 @@ public abstract class Especialista extends Funcionario{
     @Override
     public ArrayList<String> acoesDisponiveis(String contexto) {
         ArrayList<String> acoes = new ArrayList<>();
-        acoes.addAll(Arrays.asList("Atender próximo paciente"));
+        acoes.addAll(Arrays.asList("Agendamentos do dia", "Atender um paciente", "Pesquisar prontuários"));
         acoes.addAll(super.acoesDisponiveis(contexto));
         return acoes;
     }
@@ -167,15 +178,118 @@ public abstract class Especialista extends Funcionario{
     @Override
     public Interfaciavel escolherAcao(String acao) {
         switch(acao){
-            case "Atender próximo paciente":
-                try{
-                    Paciente p = selecionaProximoPaciente();
-                    atender(p);
-                }catch(Exception e){}
-                return this;
-            default:
-                return super.escolherAcao(acao);
+            case "Agendamentos do dia": return fluxoAgendamentosDoDia();
+            case "Atender um paciente": return fluxoAtenderUmPaciente();
+            case "Pesquisar prontuários": return fluxoPesquisaProntuário();
+            default: return super.escolherAcao(acao);
         }
     }
     
+    private Interfaciavel fluxoAgendamentosDoDia(){
+        
+        List<Agendamento> doDia = agendamentosNoDia(new Date());
+        
+        if(doDia.isEmpty()){
+            UBS.getInstance().ui.mostraLinha("Nenhuma consulta marcada para hoje, "+nome+".");
+        }else{
+            UBS.getInstance().ui.mostraLinha("Estes são os agendamentos do dia, "+nome+":");
+            for (Agendamento a : doDia) {
+                UBS.getInstance().ui.mostraLinha("# "+a.horario() + ": " + a.getPaciente().nomeCompleto() + " #");
+            }
+        }
+        return this; 
+    }
+     
+    private Interfaciavel fluxoAtenderUmPaciente(){
+        try{
+            Paciente p = selecionaProximoPaciente();
+            boolean continua;
+            do{
+                
+                String opt = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(new String[]{
+                    "Ver o prontuário", "Iniciar atendimento", "Cancelar"}
+                );
+                
+                switch(opt){
+                    case "Ver o prontuário":
+                        p.getProntuario().visualizar();
+                        continua = true;
+                        break;
+                    case "Iniciar atendimento":
+                        atender(p);
+                    default:
+                        continua = false;
+                        break;
+                }
+            }while(continua);
+        }catch(Exception e){}
+        return this;
+    }
+    
+    private  Interfaciavel fluxoPesquisaProntuário(){
+        try{
+            
+            UBS.getInstance().ui.mostraLinha("Pesquisando o arquivo de prontuários...");
+            Paciente paciente = selecionaProximoPaciente();
+            boolean continua;
+            
+            do{
+                UBS.getInstance().ui.mostraLinha("Prontuário selecionado: "+paciente.nomeCompleto());
+                String opt = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(new String[]{
+                    "Visualizar o prontuário", "Editar uma anotação", "Cancelar"}
+                );
+                
+                switch(opt){
+                    case "Visualizar o prontuário":
+                        
+                        paciente.getProntuario().visualizar();
+                        continua = true;
+                        break;
+                        
+                    case "Editar uma anotação":
+                        
+                        List<Anotacao> todas = paciente.getProntuario().getAnotacoes(); 
+                        ArrayList<Anotacao> minhas = new ArrayList<>();
+                        for (Anotacao nota : todas) {
+                            if(nota.getAutor().equals(this)) minhas.add(nota);
+                        }
+                        
+                        if(minhas.isEmpty()){
+                            UBS.getInstance().ui.mostraLinha("(!) Nenhuma anotação em nome de "+nome+" para este paciente.");
+                            
+                        }else{
+                            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM");
+                            boolean continuaEditando;
+
+                            for (Anotacao nota : minhas) {
+
+                                UBS.getInstance().ui.mostraLinha("-- Anotação do dia "+formatador.format(nota.getData())+" --");
+                                UBS.getInstance().ui.mostraLinha(nota.resumo());
+                                UBS.getInstance().ui.mostraLinha("-- Fim da anotação --------");
+                                String notaOpt = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(new String[]{
+                                    "Editar", "Próxima anotação", "Sair"}
+                                );
+
+                                switch(notaOpt){
+                                    case "Sair": continuaEditando = false; break;
+                                    case "Editar": nota.editar();
+                                    default: continuaEditando = true; break;
+                                }
+
+                                if(!continuaEditando) break;
+                            }
+
+                            UBS.getInstance().ui.mostraLinha("(!) Fim do prontuário.");
+                        }
+                        
+                        continua = true;
+                        break;
+                    default:
+                        continua = false;
+                        break;
+                }
+            }while(continua);
+        }catch(Exception e){}
+        return this;
+    }
 }

@@ -107,6 +107,10 @@ public class Usuario implements Interfaciavel{
         
         return this;
     }
+    
+    public String nomeCompleto(){
+        return getSobrenome().toUpperCase() + ", " + getNome();
+    }
 
     public String getEmail() {
         return email;

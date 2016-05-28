@@ -18,7 +18,7 @@ import ubs.extensions.DateHelpers;
  */
 public class Prontuario {
     
-    protected ArrayList<Anotacao> anotacoes;
+    private ArrayList<Anotacao> anotacoes;
     
     public Prontuario(Paciente paciente){
         anotacoes = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Prontuario {
     public void adicionarNota(String texto) throws PrivilegiosInsulficientesException{
         Usuario usuario = Usuario.atual;
         if(usuario instanceof Funcionario){
-            anotacoes.add(new Anotacao(texto, (Funcionario) usuario));
+            getAnotacoes().add(new Anotacao(texto, (Funcionario) usuario));
             UBS.getInstance().salvarContexto();
         }else{
             throw new PrivilegiosInsulficientesException();
@@ -36,14 +36,14 @@ public class Prontuario {
     
     public void visualizar(){
         
-        if(anotacoes.isEmpty()){
-            UBS.getInstance().ui.mostraLinha("(!) Prontuário sem anotações");
+        if(getAnotacoes().isEmpty()){
+            UBS.getInstance().ui.mostraLinha("(!) Prontuário sem anotações.");
         }else{
             
             DateFormat formatador = new SimpleDateFormat("dd/MM");
             Date diaAtual = null;
                         
-            for (Anotacao nota : anotacoes) {
+            for (Anotacao nota : getAnotacoes()) {
                 if(!DateHelpers.isSameDay(nota.getData(), diaAtual)){
                     
                     if(diaAtual != null){
@@ -62,5 +62,9 @@ public class Prontuario {
             
             UBS.getInstance().ui.mostraLinha("--- FIM do prontuário ----------------");
         }
+    }
+
+    public ArrayList<Anotacao> getAnotacoes() {
+        return anotacoes;
     }
 }

@@ -25,17 +25,15 @@ public class Medico extends Especialista{
     
     @Override
     public void atender(Paciente p) {
-        try {
-            p.getProntuario().adicionarNota("Atendimento iniciado");
-            realizarCheckList(p);
-        } catch (PrivilegiosInsulficientesException ex) {
-            
-        }
+        realizarCheckList(p);
     }
      
     private void realizarCheckList(Paciente paciente){
-        //UBS.getInstance().ui.mostraLinha("");
-        //UBS.getInstance().ui.pedeEscolhaEntreOpcoes("")
+        try {
+            paciente.getProntuario().adicionarNota("Atendimento iniciado");
+            //UBS.getInstance().ui.mostraLinha("");
+            //UBS.getInstance().ui.pedeEscolhaEntreOpcoes("")
+        } catch (PrivilegiosInsulficientesException ex) { }
     }
     
     private String pedirExames(Paciente paciente){

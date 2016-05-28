@@ -39,7 +39,7 @@ public class InterfaceDoUsuario {
     
     public String pedeString(){
         Scanner entrada = new Scanner(System.in);
-        return entrada.next();
+        return entrada.nextLine();
     }
  
     public void mostra(String texto){
@@ -83,6 +83,7 @@ public class InterfaceDoUsuario {
             }
         }while(escolhida == null);
         
+        mostra("\n");
         return escolhida;
     }
     

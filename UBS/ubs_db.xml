@@ -39,6 +39,15 @@
                     <autor class="ubs.Medico" reference="../../../../agendamentos/ubs.Agendamento/especialista" />
                     <texto>Atendimento iniciado</texto>
                 </ubs.Anotacao>
+                <ubs.Anotacao>
+                    <data>2016-05-28 03:00:58.916 UTC</data>
+                    <autor class="ubs.Medico" reference="../../../../agendamentos/ubs.Agendamento/especialista" />
+                    <texto>
+- Atendimento iniciado
+- Paciente reclama de dor no corpo: não
+- Paciente reclama de febre: não
+- Temperatura no dia: 38º</texto>
+                </ubs.Anotacao>
             </anotacoes>
         </prontuario>
     </ubs.Paciente>

@@ -5,6 +5,7 @@
  */
 package ubs.ui;
 
+import java.awt.Robot;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +41,7 @@ public class InterfaceDoUsuario {
         Scanner entrada = new Scanner(System.in);
         return entrada.next();
     }
-    
+ 
     public void mostra(String texto){
         System.out.print(texto);
     }

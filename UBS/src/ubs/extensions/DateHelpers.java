@@ -13,6 +13,8 @@ public class DateHelpers{
     
     public static Boolean isSameDay(Date a, Date b){
         
+        if(a == null || b == null) return false;
+        
         Calendar aCalendar = Calendar.getInstance();
         aCalendar.setTime(a);
         Calendar bCalendar = Calendar.getInstance();

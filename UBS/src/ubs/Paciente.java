@@ -10,11 +10,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import ubs.exceptions.AgendamentoCanceladoException;
+import ubs.extensions.DateHelpers;
 import ubs.ui.Interfaciavel;
 
 /**
@@ -80,6 +82,7 @@ public class Paciente extends Usuario{
             case "Novo agendamento": return fluxoNovoAgendamento();
             case "Meus agendamentos": return fluxoMeusAgendamentos();
             case "Cancelar agendamento": return fluxoCancelarAgendamento();
+            case "Consultar meu prontuário": return fluxoConsultarProntuario();
             default: return super.escolherAcao(acao);
         }
     }
@@ -152,6 +155,11 @@ public class Paciente extends Usuario{
         UBS.getInstance().ui.mostraLinha("O agendamento foi cancelado.\nObrigado por avisar com antecedência.");
         UBS.getInstance().salvarContexto();
         
+        return this;
+    }
+    
+    private Interfaciavel fluxoConsultarProntuario(){
+        prontuario.visualizar();
         return this;
     }
     

@@ -28,7 +28,18 @@ public class Anotacao {
     }
     
     public String resumo(){
-        //to do
-        return " ";
+        return getAutor().descricao() + ": "+getTexto();
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public Funcionario getAutor() {
+        return autor;
+    }
+
+    public String getTexto() {
+        return texto;
     }
 }

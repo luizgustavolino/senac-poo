@@ -5,17 +5,33 @@
  */
 package ubs;
 
+import ubs.exceptions.PrivilegiosInsulficientesException;
+
 /**
  *
  * @author luizgustavolino
  */
 public class AcessoProntuario extends Prontuario{
 
-    public AcessoProntuario(Paciente paciente) {
-        super(paciente);
+    private final Funcionario funcionario;
+    
+    public static AcessoProntuario doPaciente(Paciente paciente) throws PrivilegiosInsulficientesException{
+        
+        Funcionario funcionarioAtual = (Funcionario) Usuario.usuarioAtual();
+        
+        if(funcionarioAtual.getClass().equals(Medico.class) || funcionarioAtual.getClass().equals(Dentista.class)){
+            return new AcessoProntuario(paciente, funcionarioAtual);
+        }
+        
+        throw new PrivilegiosInsulficientesException();
     }
     
-    public void adicionarNota(String texto, Funcionario autor){
+    private AcessoProntuario(Paciente paciente, Funcionario funcionario) {
+        super(paciente);
+        this.funcionario = funcionario;
+    }
+    
+    public void adicionarNota(){
         
     }
 }

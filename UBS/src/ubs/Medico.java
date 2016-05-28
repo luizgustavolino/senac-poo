@@ -5,7 +5,10 @@
  */
 package ubs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import ubs.ui.Interfaciavel;
 
 /**
  *
@@ -19,6 +22,29 @@ public class Medico extends Especialista{
     
     public Medico() {
         super();
+    }
+    
+    @Override
+    public ArrayList<String> acoesDisponiveis(String contexto) {
+        ArrayList<String> acoes = new ArrayList<>();
+        acoes.addAll(Arrays.asList("Atender próximo paciente"));
+        acoes.addAll(super.acoesDisponiveis(contexto));
+        return acoes;
+    }
+    
+    @Override
+    public Interfaciavel escolherAcao(String acao) {
+        switch(acao){
+            case "Atender próximo paciente":
+                try{
+                    Paciente p = selecionaProximoPaciente();
+                }catch(Exception e){
+                    
+                }
+                return this;
+                
+            default: return super.escolherAcao(acao);
+        }
     }
     
     public String realizarCheckList(Paciente paciente){

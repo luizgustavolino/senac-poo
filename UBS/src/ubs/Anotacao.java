@@ -5,19 +5,24 @@
  */
 package ubs;
 
+import java.util.Date;
+
 /**
  *
  * @author luizgustavolino
  */
 public class Anotacao {
-    private String texto;
-    private Funcionario autor;
-    private Data data;
+    
+    private Date data;
     private Prontuario prontuario; 
-    private int id;
-   
-    public Anotacao(Prontuario prontuario){
-        //to do
+    private Funcionario autor;
+    
+    private String texto;
+    
+    public Anotacao(Prontuario prontuario, Funcionario autor){
+        this.prontuario = prontuario;
+        this.autor = autor;
+        this.data = new Date();
     }
     
     public void editar(String novoTexto){

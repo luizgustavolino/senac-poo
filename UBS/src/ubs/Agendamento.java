@@ -147,7 +147,8 @@ public class Agendamento {
         if(confirmacao.equals("Cancela")){
             throw new AgendamentoCanceladoException();
         }else{
-            UBS.getInstance().ui.mostraLinha( this.paciente.nome + ", sua consulta está confirmada! Até logo.");
+            UBS.getInstance().ui.mostraLinha( this.paciente.getNome() + ", sua consulta está confirmada!");
+            UBS.getInstance().ui.mostraLinha( "Nos vemos em breve.");
         }
         
         this.especialista.adicionarAgendamento(this);
@@ -184,9 +185,12 @@ public class Agendamento {
         return horarios;
     }
     
+    public String horario(){
+        return new SimpleDateFormat("dd/MM' às 'HH:mm").format(this.data);
+    }
+    
     public String descricao(){
-        String descData = new SimpleDateFormat("'Dia 'dd/MM' às 'HH:mm").format(this.data);
-        return "# " + descData + " - " + this.especialista.descricao() + " #";
+        return "# Dia " + horario() + " - " + this.especialista.descricao() + " #";
     }
     
     public Date getData() {

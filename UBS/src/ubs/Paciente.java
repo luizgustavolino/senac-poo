@@ -23,9 +23,10 @@ import ubs.ui.Interfaciavel;
  */
 public class Paciente extends Usuario{
     
-    public String dataDeNascimento;
+    private String dataDeNascimento;
     private final List<Agendamento> agendamentos; 
-
+    private final Prontuario prontuario;
+    
     public Paciente() {
         
         super();
@@ -35,14 +36,12 @@ public class Paciente extends Usuario{
             UBS.getInstance().ui.mostraLinha("Digite sua data de nascimento (dia/mês/ano): ");
             String dataDigitada = UBS.getInstance().ui.pedeString();
             DateFormat formatador = new SimpleDateFormat("d/M/yyyy");
+            formatador.setLenient(false);
             Date dataEscolhida;
 
             try {
                 dataEscolhida = formatador.parse(dataDigitada);
-                String dataEntendida = formatador.format(dataEscolhida);
-                if(dataEntendida.equals(dataDigitada)){
-                    dataDeNascimento = dataEntendida;
-                }
+                dataDeNascimento = formatador.format(dataEscolhida);
             }catch(ParseException e){
                 // erro na digitação
             }finally{
@@ -54,6 +53,17 @@ public class Paciente extends Usuario{
         }while(dataDeNascimento == null);
         
         agendamentos = new ArrayList<>();
+        prontuario = new Prontuario(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass().equals(Paciente.class)){
+            Paciente p = (Paciente) obj;
+            return p.getEmail().equals(email);
+        }else{
+            return super.equals(obj); 
+        }
     }
     
     @Override
@@ -100,6 +110,11 @@ public class Paciente extends Usuario{
     
     private Interfaciavel fluxoMeusAgendamentos(){
         
+        if(proximosAgendamentos().isEmpty()){
+            UBS.getInstance().ui.mostraLinha("Você não tem consultas agendadas, " + nome + ".");
+            return this;
+        }
+        
         UBS.getInstance().ui.mostraLinha("Estas são suas próximas consultas agendadas:");
         for (Agendamento agendamento : proximosAgendamentos()) {
             UBS.getInstance().ui.mostraLinha(agendamento.descricao());
@@ -109,6 +124,11 @@ public class Paciente extends Usuario{
     }
     
     private Interfaciavel fluxoCancelarAgendamento(){
+        
+        if(proximosAgendamentos().isEmpty()){
+            UBS.getInstance().ui.mostraLinha("Você não tem consultas agendadas, " + nome + ".");
+            return this;
+        }
         
         ArrayList<Agendamento> proximos = proximosAgendamentos();
         ArrayList<String> opcoes = new ArrayList<>();
@@ -143,5 +163,13 @@ public class Paciente extends Usuario{
             }
         }
         return proximos;
+    }
+
+    public String descricao(){
+        return "# " + sobrenome.toUpperCase() + ", " + nome + " (nascimento: " + dataDeNascimento + ") #";
+    }
+    
+    public String getDataDeNascimento() {
+        return dataDeNascimento;
     }
 }

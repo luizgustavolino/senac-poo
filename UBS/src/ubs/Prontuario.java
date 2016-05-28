@@ -5,16 +5,19 @@
  */
 package ubs;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author luizgustavolino
  */
 public class Prontuario {
-    private Paciente paciente;
-    private Anotacao anotacao;
+    
+    protected final Paciente paciente;
+    protected ArrayList<Anotacao> anotacao;
     
     public Prontuario(Paciente paciente){
-        
+        this.paciente = paciente;
     }
     
     public String resumo(){

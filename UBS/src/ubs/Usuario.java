@@ -37,7 +37,7 @@ public class Usuario implements Interfaciavel{
         for (Usuario umUsuario : todos) {
             if(umUsuario.validarLogin(usuario, senha)){
                 atual = umUsuario;
-                UBS.getInstance().ui.mostraLinha("Bem vindo a UBS, " + atual.nome + ".");
+                UBS.getInstance().ui.mostraLinha("Bem vindo a UBS, " + atual.getNome() + ".");
                 return atual;
             }
         }
@@ -81,7 +81,7 @@ public class Usuario implements Interfaciavel{
     }
     
     private void encerrarSessao(){
-        UBS.getInstance().ui.mostraLinha("Acesso finalizado, " + atual.nome + ". Até logo.");
+        UBS.getInstance().ui.mostraLinha("Acesso finalizado, " + atual.getNome() + ". Até logo.");
         atual = null;     
     }
     
@@ -110,5 +110,13 @@ public class Usuario implements Interfaciavel{
 
     public String getEmail() {
         return email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
     }
 }

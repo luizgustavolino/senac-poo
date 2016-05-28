@@ -36,10 +36,21 @@ public class Cadastro implements Interfaciavel{
         }
         
         if (usr != null) {
-            UBS.getInstance().registrarUsuario(usr);
-            return usr;
-        }else{
-            return UBS.getInstance();
+            
+            UBS.getInstance().ui.mostraLinha("Confirma as informações abaixo?");
+            UBS.getInstance().ui.mostraLinha("- " + usr.sobrenome.toUpperCase() + ", " + usr.nome);
+            UBS.getInstance().ui.mostraLinha("- email: "+usr.email);
+            
+            String confirmacao = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(new String[]{"SIM, confirmo", "NÃO, cancelar"});
+            
+            if(confirmacao.equals("SIM, confirmo")){
+                UBS.getInstance().registrarUsuario(usr);
+                UBS.getInstance().ui.mostraLinha("Cadastro concluído, "+usr.getNome()+".\nVocê já pode utilizar a opção 'Login'.");
+            }else{
+                UBS.getInstance().ui.mostraLinha("Seu cadastro foi cancelado.");
+            }
         }
+        
+        return UBS.getInstance();
     }
 }

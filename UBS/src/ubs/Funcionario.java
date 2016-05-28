@@ -21,7 +21,7 @@ public abstract class Funcionario extends Usuario {
     }
     
     public String nomeCompleto(){
-        return sobrenome.toUpperCase() + ", " + nome;
+        return getSobrenome().toUpperCase() + ", " + getNome();
     }
     
     public String nomeCompletoComEmail(){

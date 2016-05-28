@@ -49,7 +49,7 @@ public class Agendamento {
         }
         
         List<String> opcoesDeEspecialistas = new ArrayList<>();
-        for (Especialista umEspecialista : especialistas) opcoesDeEspecialistas.add(umEspecialista.nomeCompletoComEmail());
+        for (Especialista umEspecialista : especialistas) opcoesDeEspecialistas.add(umEspecialista.nomeCompleto());
         opcoesDeEspecialistas.add("Cancelar");
         
         String especialistaEscolhido = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(opcoesDeEspecialistas);

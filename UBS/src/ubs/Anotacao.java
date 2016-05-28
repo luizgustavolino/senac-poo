@@ -14,13 +14,11 @@ import java.util.Date;
 public class Anotacao {
     
     private Date data;
-    private Prontuario prontuario; 
     private Funcionario autor;
-    
     private String texto;
     
-    public Anotacao(Prontuario prontuario, Funcionario autor){
-        this.prontuario = prontuario;
+    public Anotacao(String texto, Funcionario autor){
+        this.texto = texto;
         this.autor = autor;
         this.data = new Date();
     }

@@ -6,6 +6,7 @@
 package ubs;
 
 import java.util.ArrayList;
+import ubs.exceptions.PrivilegiosInsulficientesException;
 
 /**
  *
@@ -13,11 +14,20 @@ import java.util.ArrayList;
  */
 public class Prontuario {
     
-    protected final Paciente paciente;
-    protected ArrayList<Anotacao> anotacao;
+    protected ArrayList<Anotacao> anotacoes;
     
     public Prontuario(Paciente paciente){
-        this.paciente = paciente;
+        anotacoes = new ArrayList<>();
+    }
+    
+    public void adicionarNota(String texto) throws PrivilegiosInsulficientesException{
+        Usuario usuario = Usuario.atual;
+        if(usuario instanceof Funcionario){
+            anotacoes.add(new Anotacao(texto, (Funcionario) usuario));
+            UBS.getInstance().salvarContexto();
+        }else{
+            throw new PrivilegiosInsulficientesException();
+        }
     }
     
     public String resumo(){

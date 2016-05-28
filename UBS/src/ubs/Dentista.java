@@ -19,13 +19,12 @@ public class Dentista extends Especialista{
         return todos(Dentista.class);
     }
     
-    public Dentista() {
-        super();
+    public void realizarProcedimentos(Paciente paciente){
+        
     }
-    
-    
-    public String realizarProcedimentos(Paciente paciente){
-        //to do
-        return " ";
+
+    @Override
+    public void atender(Paciente p) {        
+        realizarProcedimentos(p);
     }
 }

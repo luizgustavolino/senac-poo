@@ -8,6 +8,9 @@ package ubs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ubs.exceptions.PrivilegiosInsulficientesException;
 import ubs.ui.Interfaciavel;
 
 /**
@@ -20,44 +23,25 @@ public class Medico extends Especialista{
         return todos(Medico.class);
     }
     
-    public Medico() {
-        super();
-    }
-    
     @Override
-    public ArrayList<String> acoesDisponiveis(String contexto) {
-        ArrayList<String> acoes = new ArrayList<>();
-        acoes.addAll(Arrays.asList("Atender próximo paciente"));
-        acoes.addAll(super.acoesDisponiveis(contexto));
-        return acoes;
-    }
-    
-    @Override
-    public Interfaciavel escolherAcao(String acao) {
-        switch(acao){
-            case "Atender próximo paciente":
-                try{
-                    Paciente p = selecionaProximoPaciente();
-                }catch(Exception e){
-                    
-                }
-                return this;
-                
-            default: return super.escolherAcao(acao);
+    public void atender(Paciente p) {
+        try {
+            p.getProntuario().adicionarNota("Atendimento iniciado");
+            realizarCheckList(p);
+        } catch (PrivilegiosInsulficientesException ex) {
+            
         }
     }
-    
-    public String realizarCheckList(Paciente paciente){
+     
+    private void realizarCheckList(Paciente paciente){
         //UBS.getInstance().ui.mostraLinha("");
         //UBS.getInstance().ui.pedeEscolhaEntreOpcoes("")
-        return " ";
     }
     
     private String pedirExames(Paciente paciente){
         //to do
         return " ";
     }
-    
     
 }
 

@@ -1,1 +1,46 @@
-<?xml version='1.0' encoding='UTF-8'?><list><ubs.Paciente><email>luiz@email.com</email><nome>Luiz</nome><sobrenome>Gustavo</sobrenome><senha>123</senha><dataDeNascimento>13/9/1988</dataDeNascimento><agendamentos /><prontuario><paciente reference="../.." /></prontuario></ubs.Paciente><ubs.Paciente><email>carolina@email.com</email><nome>Carolina</nome><sobrenome>Mendez</sobrenome><senha>123</senha><dataDeNascimento>20/9/2000</dataDeNascimento><agendamentos /><prontuario><paciente reference="../.." /></prontuario></ubs.Paciente><ubs.Medico><email>takeo@email.com</email><nome>Takeo</nome><sobrenome>Ueda</sobrenome><senha>123</senha><agendamentos><ubs.Agendamento><data>2016-05-31 12:30:00.0 UTC</data><paciente><email>pat@email.com</email><nome>Pat</nome><sobrenome>Silva</sobrenome><senha>123</senha><dataDeNascimento>5/3/1997</dataDeNascimento><agendamentos><ubs.Agendamento reference="../../.." /><ubs.Agendamento><data>2016-05-31 14:00:00.0 UTC</data><paciente reference="../../.." /><especialista class="ubs.Medico" reference="../../../../../.." /></ubs.Agendamento></agendamentos><prontuario><paciente reference="../.." /></prontuario></paciente><especialista class="ubs.Medico" reference="../../.." /></ubs.Agendamento><ubs.Agendamento reference="../ubs.Agendamento/paciente/agendamentos/ubs.Agendamento[2]" /><ubs.Agendamento><data>2016-06-01 17:00:00.0 UTC</data><paciente><email>rodrigo@email.com</email><nome>Rodrigo</nome><sobrenome>Silva</sobrenome><senha>123</senha><dataDeNascimento>1/4/1998</dataDeNascimento><agendamentos><ubs.Agendamento reference="../../.." /></agendamentos><prontuario><paciente reference="../.." /></prontuario></paciente><especialista class="ubs.Medico" reference="../../.." /></ubs.Agendamento></agendamentos></ubs.Medico><ubs.Dentista><email>emerson@email.com</email><nome>Emerson</nome><sobrenome>Tanaka</sobrenome><senha>123</senha></ubs.Dentista><ubs.Enfermeiro><email>fred@email.com</email><nome>Fred</nome><sobrenome>Talarico</sobrenome><senha>123</senha></ubs.Enfermeiro><ubs.Paciente><email>geovana@email.com</email><nome>Geovana</nome><sobrenome>Fornari</sobrenome><senha>123</senha><dataDeNascimento>3/9/1998</dataDeNascimento><agendamentos /><prontuario><paciente reference="../.." /></prontuario></ubs.Paciente><ubs.Paciente reference="../ubs.Medico/agendamentos/ubs.Agendamento/paciente" /><ubs.Paciente><email>claudio@email.com</email><nome>Claudio</nome><sobrenome>Fornari</sobrenome><senha>123</senha><dataDeNascimento>10/5/1976</dataDeNascimento><agendamentos /><prontuario><paciente reference="../.." /></prontuario></ubs.Paciente><ubs.Paciente reference="../ubs.Medico/agendamentos/ubs.Agendamento[3]/paciente" /></list>
+<?xml version='1.0' encoding='UTF-8'?>
+<list>
+    <ubs.Paciente>
+        <email>pepe@email.com</email>
+        <nome>Pepe</nome>
+        <sobrenome>Santana</sobrenome>
+        <senha>123</senha>
+        <dataDeNascimento>10/5/1978</dataDeNascimento>
+        <agendamentos />
+        <prontuario>
+            <anotacoes />
+        </prontuario>
+    </ubs.Paciente>
+    <ubs.Paciente>
+        <email>pat@email.com</email>
+        <nome>Patricia</nome>
+        <sobrenome>Menezes</sobrenome>
+        <senha>123</senha>
+        <dataDeNascimento>1/2/1988</dataDeNascimento>
+        <agendamentos>
+            <ubs.Agendamento>
+                <data>2016-06-03 13:30:00.0 UTC</data>
+                <paciente reference="../../.." />
+                <especialista class="ubs.Medico">
+                    <email>hideki@email.com</email>
+                    <nome>Hideki</nome>
+                    <sobrenome>Shippo</sobrenome>
+                    <senha>123</senha>
+                    <agendamentos>
+                        <ubs.Agendamento reference="../../.." />
+                    </agendamentos>
+                </especialista>
+            </ubs.Agendamento>
+        </agendamentos>
+        <prontuario>
+            <anotacoes>
+                <ubs.Anotacao>
+                    <data>2016-05-28 02:12:56.205 UTC</data>
+                    <autor class="ubs.Medico" reference="../../../../agendamentos/ubs.Agendamento/especialista" />
+                    <texto>Atendimento iniciado</texto>
+                </ubs.Anotacao>
+            </anotacoes>
+        </prontuario>
+    </ubs.Paciente>
+    <ubs.Medico reference="../ubs.Paciente[2]/agendamentos/ubs.Agendamento/especialista" />
+</list>

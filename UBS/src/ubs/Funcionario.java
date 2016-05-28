@@ -10,14 +10,9 @@ package ubs;
  * @author luizgustavolino
  */
 public abstract class Funcionario extends Usuario {
-    private AcessoProntuario[] prontuarios;
-
-    public Funcionario() {
-        super();
-    }
 
     public String descricao(){
-         return "(" + this.getClass().getSimpleName() + ") " + nomeCompleto();
+        return "(" + this.getClass().getSimpleName() + ") " + nomeCompleto();
     }
     
     public String nomeCompleto(){

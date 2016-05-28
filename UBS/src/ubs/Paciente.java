@@ -91,8 +91,8 @@ public class Paciente extends Usuario{
             Agendamento novoAgendamento = new Agendamento(this);
             novoAgendamento.confirmar();
 
-            agendamentos.add(novoAgendamento);
-            Collections.sort(agendamentos, new Comparator<Agendamento>() {
+            getAgendamentos().add(novoAgendamento);
+            Collections.sort(getAgendamentos(), new Comparator<Agendamento>() {
                 @Override
                 public int compare(Agendamento a, Agendamento b){
                     return a.getData().compareTo(b.getData());
@@ -147,7 +147,7 @@ public class Paciente extends Usuario{
         String confirmacao = UBS.getInstance().ui.pedeEscolhaEntreOpcoes(new String[]{"SIM, cancele esse agendamento","NÃO, voltar ao menu de opções"});
         if ("NÃO, voltar ao menu de opções".equals(confirmacao)) return this;
         
-        agendamentos.remove(agendamentoEscolhido);
+        getAgendamentos().remove(agendamentoEscolhido);
         
         UBS.getInstance().ui.mostraLinha("O agendamento foi cancelado.\nObrigado por avisar com antecedência.");
         UBS.getInstance().salvarContexto();
@@ -157,7 +157,7 @@ public class Paciente extends Usuario{
     
     private ArrayList<Agendamento> proximosAgendamentos(){
         ArrayList<Agendamento> proximos = new ArrayList<>();
-        for (Agendamento agendamento : agendamentos) {
+        for (Agendamento agendamento : getAgendamentos()) {
             if(agendamento.getData().after(new Date())){
                 proximos.add(agendamento);
             }
@@ -166,10 +166,18 @@ public class Paciente extends Usuario{
     }
 
     public String descricao(){
-        return "# " + sobrenome.toUpperCase() + ", " + nome + " (nascimento: " + dataDeNascimento + ") #";
+        return "# " + sobrenome.toUpperCase() + ", " + nome + " (nascimento: " + getDataDeNascimento() + ") #";
     }
     
     public String getDataDeNascimento() {
         return dataDeNascimento;
+    }
+
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
+    }
+
+    public Prontuario getProntuario() {
+        return prontuario;
     }
 }

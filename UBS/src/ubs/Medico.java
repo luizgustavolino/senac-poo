@@ -31,7 +31,7 @@ public class Medico extends Especialista{
     private void realizarCheckList(Paciente paciente){
         try {
             paciente.getProntuario().adicionarNota("Atendimento iniciado");
-            //UBS.getInstance().ui.mostraLinha("");
+            //UBS.getInstance().ui.mostraLinha("O paciente esta bem?");
             //UBS.getInstance().ui.pedeEscolhaEntreOpcoes("")
         } catch (PrivilegiosInsulficientesException ex) { }
     }
